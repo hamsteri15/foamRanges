@@ -24,8 +24,8 @@ TEST_CASE("Benchmark-Ranges")
 
     using scalarFieldType = NewField<scalar>;
     using vectorFieldType = NewField<vector>;
-    using volScalarFieldType = MyVolScalarField;
-    using volVectorFieldType = MyVolVectorField;
+    using volScalarFieldType = NewVolScalarField;
+    using volVectorFieldType = NewVolVectorField;
 
     SECTION("scalarField")
     {

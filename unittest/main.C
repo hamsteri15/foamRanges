@@ -2,25 +2,14 @@
 #define CATCH_CONFIG_RUNNER
 #include "args.H"
 #include "catch.H"
-#include <mpi.h>
 #include <iostream>
 
-//Run either:
-//mpirun -np 3 Test-gpuOpenFOAM --parallel
-//or
-//Test-gpuOpenFOAM
-
-
 Foam::argList* argsPtr = nullptr;
-
-//static const std::string        TestCaseName = "cavity_parallel";
-//static const GeomFieldGenerator generator = make_field_generator(TestCaseName);
-
 
 int main(int argc, char *argv[]){
 
 
-    Catch::Session session;          // There must be exactly one instance
+    Catch::Session session;
 
 
     // Add the command line argument to switch between parallel mode
@@ -81,24 +70,11 @@ int main(int argc, char *argv[]){
         Foam::FatalError.exit();
     }
 
-
-
-    mpi_barrier();
-
-
-
     // Start the session
     const int result = session.run();
 
-
-
-    mpi_barrier();
-
-
-    // Clean up MPI
+    // Clean up
     clearFoamArgs();
-
-
 
 
     return result;

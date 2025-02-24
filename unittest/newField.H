@@ -10,29 +10,6 @@ namespace Foam{
 
 
 
-template<class Range_t, std::enable_if_t<IsFoamField_v<Range_t>, bool> = true>
-constexpr auto mag2(const Range_t& rng)
-{
-    return FoamRanges::transform(rng, Mag{});
-}
-
-
-template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>
-constexpr auto plus(const T1& rng1, const T2& rng2)
-{
-    return detail::rng_promoting_transform(rng1, rng2, Plus{});
-}
-
-
-template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>
-constexpr auto mult(const T1& rng1, const T2& rng2)
-{
-    return detail::rng_promoting_transform(rng1, rng2, Multiplies{});
-}
-
-
-
-
 template<class T>
 struct NewField : public Field<T>{
 
@@ -74,6 +51,28 @@ template<class T>
 static inline NewField<T> toNewField(const tmp<Field<T>>& f)
 {
     return toNewField(f());
+}
+
+
+///These are the operations for newFields
+template<class Range_t, std::enable_if_t<IsFoamField_v<Range_t>, bool> = true>
+constexpr auto mag2(const Range_t& rng)
+{
+    return FoamRanges::transform(rng, Mag{});
+}
+
+
+template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>
+constexpr auto plus(const T1& rng1, const T2& rng2)
+{
+    return detail::rng_promoting_transform(rng1, rng2, Plus{});
+}
+
+
+template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>
+constexpr auto mult(const T1& rng1, const T2& rng2)
+{
+    return detail::rng_promoting_transform(rng1, rng2, Multiplies{});
 }
 
 } // namespace Foam

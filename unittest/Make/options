@@ -1,18 +1,13 @@
--include $(GENERAL_RULES)/mplibType
-
-
 EXE_INC = \
     -std=c++17 \
     -I$(FOAM_SRC)/OpenFOAM/lnInclude \
     -I$(FOAM_SRC)/finiteVolume/lnInclude \
     -I$(FOAM_SRC)/OSspecific/POSIX/lnInclude \
-    -I../src/lnInclude \
-    $(PFLAGS) $(PINC)
+    -I../src/lnInclude
 
 EXE_LIBS = \
     -lOpenFOAM \
-    -lfiniteVolume \
-    $(PFLAGS)
+    -lfiniteVolume
 
 
 

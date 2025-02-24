@@ -13,41 +13,25 @@
 namespace Foam{
 
 
-static Time makeTime(const argList& args)
-{
-    mpi_barrier();
-    return Time("controlDict", args);
-}
-
-static fvMesh makeMesh(const Time& runTime)
-{
-    mpi_barrier();
-    return fvMesh
-    (
-        IOobject
-        (
-            Foam::fvMesh::defaultRegion,
-            runTime.name(),
-            runTime,
-            Foam::IOobject::MUST_READ
-        ),
-        false
-    );
-
-}
-
-
 
 
 struct FieldReader{
 
 
     FieldReader(const argList& args) :
-    runTime_(makeTime(args)),
-    mesh_(makeMesh(runTime_))
-    {
-        mpi_barrier();
-    }
+    runTime_(Time("controlDict", args)),
+    mesh_
+    (
+        IOobject
+        (
+            Foam::fvMesh::defaultRegion,
+            runTime_.name(),
+            runTime_,
+            Foam::IOobject::MUST_READ
+        ),
+        false
+    )
+    {}
 
 
     const fvMesh& mesh() const
@@ -73,7 +57,6 @@ struct FieldReader{
             ),
             mesh()
         );
-        mpi_barrier();
         //NOTE! Can not correct boundary conditions here because fields may have
         //field dependencies which are not read yet
         //ret.correctBoundaryConditions();
@@ -97,23 +80,13 @@ struct FieldReader{
         //NOTE! Can not correct boundary conditions here because fields may have
         //field dependencies which are not read yet
         //ret.correctBoundaryConditions();
-        mpi_barrier();
         return ret;
     }
-
-
-
-
-
-
-
 
 private:
 
     Time runTime_;
     fvMesh mesh_;
-
-
 };
 
 
