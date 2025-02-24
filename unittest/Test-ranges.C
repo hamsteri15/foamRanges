@@ -6,8 +6,6 @@
 #include "approx_equal.H"
 #include "mock_fields.H"
 
-#include "myField.H"
-#include "myGeometricField.H"
 #include "operations.H"
 
 #include "dimensionedType.H"

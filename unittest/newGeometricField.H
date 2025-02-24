@@ -31,16 +31,19 @@ constexpr auto mult(const T1& rng1, const T2& rng2)
 
 
 
-template<class Type, template<class> class PatchField, class GeoMesh>
-struct NewGeometricField : public GeometricField<Type, PatchField, GeoMesh>{
+template<class Type, class GeoMesh, template<class> class PrimitiveField>
+struct NewGeometricField : public GeometricField<Type, GeoMesh, PrimitiveField>{
 
-    using base_type = GeometricField<Type, PatchField, GeoMesh>;
+    using base_type = GeometricField<Type, GeoMesh, PrimitiveField>;
 
     //This is required for the range constructor
     using GeoMeshType = GeoMesh;
 
     //Inherit constructors
-    using GeometricField<Type, PatchField, GeoMesh>::GeometricField;
+    using GeometricField<Type, GeoMesh, PrimitiveField>::GeometricField;
+
+    using Patch = typename base_type::Patch;
+
 
     static constexpr bool is_foam_field = false;
     static constexpr bool is_foam_field_field = false;
@@ -63,7 +66,7 @@ struct NewGeometricField : public GeometricField<Type, PatchField, GeoMesh>{
         ),
         rng.mesh()(), //range stores a GeoMesh, we get the fvMesh from it
         rng.dimensions(),
-        PatchField<Type>::calculatedType()
+        Patch::calculatedType()
     )
     {
         FoamRanges::copy(rng.primitiveField(), this->primitiveFieldRef());
@@ -93,26 +96,26 @@ struct NewGeometricField : public GeometricField<Type, PatchField, GeoMesh>{
 
 
 
-template<class Type, template<class> class PatchField, class GeoMesh>
-static inline NewGeometricField<Type, PatchField, GeoMesh> toNewField
+template<class Type, class GeoMesh, template<class> class PrimitiveField>
+static inline NewGeometricField<Type, GeoMesh, PrimitiveField> toNewField
 (
-    const GeometricField<Type, PatchField, GeoMesh>& f
+    const GeometricField<Type, GeoMesh, PrimitiveField>& f
 )
 {
-    return NewGeometricField<Type, PatchField, GeoMesh>(f);
+    return NewGeometricField<Type, GeoMesh, PrimitiveField>(f);
 }
 
-template<class Type, template<class> class PatchField, class GeoMesh>
-static inline NewGeometricField<Type, PatchField, GeoMesh> toNewField
+template<class Type, class GeoMesh, template<class> class PrimitiveField>
+static inline NewGeometricField<Type, GeoMesh, PrimitiveField> toNewField
 (
-    const tmp<GeometricField<Type, PatchField, GeoMesh>>& f
+    const tmp<GeometricField<Type, GeoMesh, PrimitiveField>>& f
 )
 {
     return toNewField(f());
 }
 
 template<class Type>
-using MyVolField = NewGeometricField<Type, fvPatchField, volMesh>;
+using MyVolField = NewGeometricField<Type, volMesh, Field>;
 
 
 using MyVolScalarField = MyVolField<scalar>;

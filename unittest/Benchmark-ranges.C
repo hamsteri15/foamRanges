@@ -6,8 +6,8 @@
 #include "approx_equal.H"
 
 
-#include "myField.H"
-#include "myGeometricField.H"
+#include "newField.H"
+#include "newGeometricField.H"
 #include "operations.H"
 
 #include "dimensionedType.H"
@@ -219,11 +219,5 @@ TEST_CASE("Benchmark-Ranges")
         };
 
     }
-
-
-
-
-
-
 
 }

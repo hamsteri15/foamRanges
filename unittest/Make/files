@@ -1,7 +1,7 @@
 main.C
 
 Test-ranges.C
-#Benchmark-ranges.C
+Benchmark-ranges.C
 
 
 EXE = $(FOAM_USER_APPBIN)/Test-Ranges
