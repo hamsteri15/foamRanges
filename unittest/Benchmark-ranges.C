@@ -59,11 +59,11 @@ TEST_CASE("Benchmark-Ranges")
         };
 
         BENCHMARK("f + f + f + f (old)") {
-            return scalarFieldType(f + f + f);
+            return scalarFieldType(f + f + f + f);
         };
 
         BENCHMARK("f + f + f + f (new)") {
-            return scalarFieldType(plus(plus(f, f), f));
+            return scalarFieldType(plus(plus(plus(f, f), f), f));
         };
 
     }
@@ -100,11 +100,11 @@ TEST_CASE("Benchmark-Ranges")
         };
 
         BENCHMARK("f + f + f + f (old)") {
-            return vectorFieldType(f + f + f);
+            return vectorFieldType(f + f + f + f);
         };
 
         BENCHMARK("f + f + f + f (new)") {
-            return vectorFieldType(plus(plus(f, f), f));
+            return vectorFieldType(plus(plus(plus(f, f), f), f));
         };
 
     }
@@ -143,11 +143,11 @@ TEST_CASE("Benchmark-Ranges")
         };
 
         BENCHMARK("p + p + p + p (old)") {
-            return volScalarFieldType(f + f + f);
+            return volScalarFieldType(f + f + f + f);
         };
 
         BENCHMARK("p + p + p + p (new)") {
-            return volScalarFieldType(plus(plus(f, f), f));
+            return volScalarFieldType(plus(plus(plus(f, f), f), f));
         };
 
     }
@@ -184,11 +184,11 @@ TEST_CASE("Benchmark-Ranges")
         };
 
         BENCHMARK("U + U + U + U (old)") {
-            return volVectorFieldType(f + f + f);
+            return volVectorFieldType(f + f + f + f);
         };
 
         BENCHMARK("U + U + U + U (new)") {
-            return volVectorFieldType(plus(plus(f, f), f));
+            return volVectorFieldType(plus(plus(plus(f, f), f), f));
         };
 
     }
