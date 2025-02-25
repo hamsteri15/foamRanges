@@ -84,9 +84,9 @@ georng_promoting_transform(const T1& lhs, const T2& rhs, const BinaryOp& f) {
 
     using namespace FoamRanges;
 
-    if constexpr (BothGeometricRanges_v<T1, T2>) {
+    if constexpr (BothGeometricField_v<T1, T2>) {
         return geometric_transform(lhs, rhs, f);
-    } else if constexpr (IsGeometricRange_v<T1>) {
+    } else if constexpr (IsFoamGeometricField_v<T1>) {
         return geometric_transform(
             lhs,
             make_geometric_constant_range(EnsureDimensioned<T2>(rhs).type,

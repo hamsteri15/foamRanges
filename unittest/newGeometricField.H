@@ -34,7 +34,7 @@ struct NewGeometricField : public GeometricField<Type, GeoMesh, PrimitiveField>{
     static constexpr bool is_foam_geometric_field = true;
 
     //Allow construction from ranges
-    template<class Rng, std::enable_if_t<IsGeometricRange_v<Rng>, int> = 0>
+    template<class Rng, std::enable_if_t<IsFoamGeometricField_v<Rng>, int> = 0>
     NewGeometricField(const Rng& rng) :
     base_type
     (
@@ -100,19 +100,19 @@ static inline NewGeometricField<Type, GeoMesh, PrimitiveField> toNewField
 
 ///These are the operations for newGeometricFields
 
-template<class GeomRange_t, std::enable_if_t<IsGeometricRange_v<GeomRange_t>, bool> = true>
+template<class GeomRange_t, std::enable_if_t<IsFoamGeometricField_v<GeomRange_t>, bool> = true>
 constexpr auto mag2(const GeomRange_t& rng)
 {
     return FoamRanges::geometric_transform(rng, Mag{});
 }
 
-template<class T1, class T2, std::enable_if_t<AtleastOneGeometricRange_v<T1, T2>, bool> = true>
+template<class T1, class T2, std::enable_if_t<AtleastOneGeometricField_v<T1, T2>, bool> = true>
 constexpr auto plus(const T1& rng1, const T2& rng2)
 {
     return detail::georng_promoting_transform(rng1, rng2, Plus{});
 }
 
-template<class T1, class T2, std::enable_if_t<AtleastOneGeometricRange_v<T1, T2>, bool> = true>
+template<class T1, class T2, std::enable_if_t<AtleastOneGeometricField_v<T1, T2>, bool> = true>
 constexpr auto mult(const T1& rng1, const T2& rng2)
 {
     return detail::georng_promoting_transform(rng1, rng2, Multiplies{});

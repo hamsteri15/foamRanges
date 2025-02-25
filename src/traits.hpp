@@ -202,33 +202,33 @@ constexpr bool IsVolumeField_v = std::is_same_v<DeduceMeshType_t<T>, gpuVolMesh>
 
 
 template<class T, typename = void>
-struct IsGeometricRange : public std::false_type{};
+struct IsFoamGeometricField : public std::false_type{};
 
 //TODO: Fix
 template<class T>
-struct IsGeometricRange<T, std::enable_if_t<T::is_foam_geometric_field>> : public std::true_type {};
+struct IsFoamGeometricField<T, std::enable_if_t<T::is_foam_geometric_field>> : public std::true_type {};
 
 
 template<typename T>
-static constexpr bool IsGeometricRange_v = IsGeometricRange<T>::value;
+static constexpr bool IsFoamGeometricField_v = IsFoamGeometricField<T>::value;
 
 ///////////////////////////////////////////////////////////////////////////////////
 
 
 template <typename T1, typename T2>
-struct BothAreGeometricRanges : std::bool_constant<IsGeometricRange_v<T1> && IsGeometricRange_v<T2>> {};
+struct BothGeometricField : std::bool_constant<IsFoamGeometricField_v<T1> && IsFoamGeometricField_v<T2>> {};
 
 
 template <typename T1, typename T2>
-inline constexpr bool BothGeometricRanges_v = BothAreGeometricRanges<T1, T2>::value;
+inline constexpr bool BothGeometricField_v = BothGeometricField<T1, T2>::value;
 
 ///////////////////////////////////////////////////////////////////////////////////
 
 template <typename T1, typename T2>
-struct AtleastOneGeometricRange : std::bool_constant<IsGeometricRange_v<T1> || IsGeometricRange_v<T2>> {};
+struct AtleastOneGeometricField : std::bool_constant<IsFoamGeometricField_v<T1> || IsFoamGeometricField_v<T2>> {};
 
 template <typename T1, typename T2>
-inline constexpr bool AtleastOneGeometricRange_v = AtleastOneGeometricRange<T1, T2>::value;
+inline constexpr bool AtleastOneGeometricField_v = AtleastOneGeometricField<T1, T2>::value;
 
 ///////////////////////////////////////////////////////////////////////////////////
 
