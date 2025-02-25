@@ -1,0 +1,120 @@
+/*---------------------------------------------------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  dev
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+Build  : dev-d0db21bb6d5e
+Exec   : parallelTest
+Date   : Feb 25 2025
+Time   : 15:19:40
+Host   : "fgpu01"
+PID    : 2870560
+I/O    : uncollated
+Case   : /u2/pjppetteri/OpenFOAM/pjppetteri-dev/run/Random/channel395
+nProcs : 1
+sigFpe : Enabling floating point exception trapping (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Test-Ranges is a Catch v2.13.10 host application.
+Run with -? for options
+
+-------------------------------------------------------------------------------
+Benchmark-Ranges
+  scalarField
+-------------------------------------------------------------------------------
+Benchmark-ranges.C:30
+...............................................................................
+
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+WARMUP                                         100             2    14.4223 us 
+scalar * f (old)                               100             3      13.75 us 
+scalar * f (new)                               100             2    16.6526 us 
+f + f (old)                                    100             3    12.7624 us 
+f + f (new)                                    100             2    16.5986 us 
+f + f + f (old)                                100             1    46.9248 us 
+f + f + f (new)                                100             3    13.8228 us 
+f + f + f + f (old)                            100             1    33.5392 us 
+f + f + f + f (new)                            100             3    14.0196 us 
+
+-------------------------------------------------------------------------------
+Benchmark-Ranges
+  vectorField
+-------------------------------------------------------------------------------
+Benchmark-ranges.C:71
+...............................................................................
+
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+WARMUP                                         100             1    43.4372 us 
+scalar * f (old)                               100             1    43.1236 us 
+scalar * f (new)                               100             1    37.1599 us 
+f + f (old)                                    100             1    36.7773 us 
+f + f (new)                                    100             1    37.2365 us 
+f + f + f (old)                                100             1    89.1589 us 
+f + f + f (new)                                100             1    36.6865 us 
+f + f + f + f (old)                            100             1    89.6272 us 
+f + f + f + f (new)                            100             1    43.1082 us 
+
+-------------------------------------------------------------------------------
+Benchmark-Ranges
+  volScalarField
+-------------------------------------------------------------------------------
+Benchmark-ranges.C:114
+...............................................................................
+
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+WARMUP                                         100             2    22.9166 us 
+scalar * p (old)                               100             2    24.2223 us 
+scalar * p (new)                               100             2    20.0723 us 
+p + p (old)                                    100             2    22.8159 us 
+p + p (new)                                    100             2    21.7096 us 
+p + p + p (old)                                100             1    61.1117 us 
+p + p + p (new)                                100             2    21.9918 us 
+p + p + p + p (old)                            100             1    61.3526 us 
+p + p + p + p (new)                            100             2     22.013 us 
+
+-------------------------------------------------------------------------------
+Benchmark-Ranges
+  volVectorFieldType
+-------------------------------------------------------------------------------
+Benchmark-ranges.C:155
+...............................................................................
+
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+WARMUP                                         100             1    61.0621 us 
+scalar * U (old)                               100             1    60.8128 us 
+scalar * U (new)                               100             1    53.4659 us 
+U + U (old)                                    100             1    59.8026 us 
+U + U (new)                                    100             1    50.7427 us 
+U + U + U (old)                                100             1    115.288 us 
+U + U + U (new)                                100             1    56.1809 us 
+U + U + U + U (old)                            100             1    115.322 us 
+U + U + U + U (new)                            100             1    55.7859 us 
+
+-------------------------------------------------------------------------------
+Benchmark-Ranges
+  Mixed volField operations
+-------------------------------------------------------------------------------
+Benchmark-ranges.C:197
+...............................................................................
+
+benchmark name                            samples    iterations          mean
+-------------------------------------------------------------------------------
+WARMUP                                         100             1    223.934 us 
+mag(p) * U (old)                               100             1    89.7157 us 
+mag(p) * U (new)                               100             1     60.484 us 
+mag(p) * U + mag(p) * U (old)                  100             1     223.73 us 
+mag(p) * U + mag(p) * U (new)                  100             1    91.7938 us 
+
+===============================================================================
+All tests passed (128 assertions in 5 test cases)
+
