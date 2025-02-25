@@ -15,10 +15,6 @@
 using namespace Foam;
 
 
-
-
-
-
 TEST_CASE("Test-Range"){
 
     auto f1 = MockField<scalar>({1,2,3});
@@ -293,6 +289,8 @@ TEST_CASE("Test-GeometricRange")
 {
     MockGeoField f1 = MockGeoField();
     const MockGeoField f2 = MockGeoField();
+
+
 
     SECTION("geometric_transform")
     {
