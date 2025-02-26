@@ -1,9 +1,9 @@
 #define CATCH_CONFIG_ENABLE_BENCHMARKING
 #include "catch.H"
 #include "args.H"
-#include "field_reader.H"
-#include "geomesh_access.H"
-#include "approx_equal.H"
+#include "fieldReader.H"
+#include "geomeshAccess.H"
+#include "approxEqual.H"
 
 
 #include "newField.H"

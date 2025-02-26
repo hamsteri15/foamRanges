@@ -13,7 +13,8 @@
 * Go to a case folder which has fields p and U in 0 folder and type 
 ``` Test-Ranges --benchmark-no-analysis ```
 * You will see various field operations carried out with the standard OpenFOAM style (old) and with the proposed ranges approach (new)
-
+* If you only wish to run the tests without benchmarks you can type
+``` Test-Ranges Test* ```
 
 ## **Additional notes**
 * The ```unittest/mock_fields.H``` contains "mock" fields which are used to test the ranges implementation without reading mesh
