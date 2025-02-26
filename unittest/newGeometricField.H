@@ -109,13 +109,13 @@ constexpr auto mag2(const GeomRange_t& rng)
 template<class T1, class T2, std::enable_if_t<AtleastOneGeometricField_v<T1, T2>, bool> = true>
 constexpr auto plus(const T1& rng1, const T2& rng2)
 {
-    return detail::georngPromotingTransform(rng1, rng2, Plus{});
+    return georngPromotingTransform(rng1, rng2, Plus{});
 }
 
 template<class T1, class T2, std::enable_if_t<AtleastOneGeometricField_v<T1, T2>, bool> = true>
 constexpr auto mult(const T1& rng1, const T2& rng2)
 {
-    return detail::georngPromotingTransform(rng1, rng2, Multiplies{});
+    return georngPromotingTransform(rng1, rng2, Multiplies{});
 }
 
 

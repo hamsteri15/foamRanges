@@ -44,9 +44,9 @@ TEST_CASE("Test-Range"){
 
     SECTION("rngPromotingTransform")
     {
-        auto rng1 = detail::rngPromotingTransform(f1, f2, Plus{});
-        auto rng2 = detail::rngPromotingTransform(f1, scalar(1), Plus{});
-        auto rng3 = detail::rngPromotingTransform(scalar(1), f2, Plus{});
+        auto rng1 = rngPromotingTransform(f1, f2, Plus{});
+        auto rng2 = rngPromotingTransform(f1, scalar(1), Plus{});
+        auto rng3 = rngPromotingTransform(scalar(1), f2, Plus{});
 
         CHECK(MockField<scalar>(rng1) == MockField<scalar>({2, 4, 6}));
         CHECK(MockField<scalar>(rng2) == MockField<scalar>({2, 3, 4}));
@@ -128,9 +128,9 @@ TEST_CASE("Test-MdRange")
 
     SECTION("mdrngPromotingTransform")
     {
-        auto rng1 = detail::mdrngPromotingTransform(f1, f2, Plus{});
-        auto rng2 = detail::mdrngPromotingTransform(scalar(1), f2, Plus{});
-        auto rng3 = detail::mdrngPromotingTransform(f1, scalar(1), Plus{});
+        auto rng1 = mdrngPromotingTransform(f1, f2, Plus{});
+        auto rng2 = mdrngPromotingTransform(scalar(1), f2, Plus{});
+        auto rng3 = mdrngPromotingTransform(f1, scalar(1), Plus{});
 
         CHECK(MockField<scalar>(rng1[0]) == MockField<scalar>({2, 2, 2}));
         CHECK(MockField<scalar>(rng1[1]) == MockField<scalar>({4, 4, 4, 4}));
@@ -228,9 +228,9 @@ TEST_CASE("Test-DimensionedRange")
 
     SECTION("dimensioned_promoting_transform")
     {
-        auto rng1 = detail::dimrngPromotingTransform(f1, f2, Plus{});
-        auto rng2 = detail::dimrngPromotingTransform(f1, scalar(1), Plus{});
-        auto rng3 = detail::dimrngPromotingTransform(scalar(1), f2, Plus{});
+        auto rng1 = dimrngPromotingTransform(f1, f2, Plus{});
+        auto rng2 = dimrngPromotingTransform(f1, scalar(1), Plus{});
+        auto rng3 = dimrngPromotingTransform(scalar(1), f2, Plus{});
 
         CHECK(rng1.dimensions() == dimless);
         CHECK(rng2.dimensions() == dimless);
@@ -338,9 +338,9 @@ TEST_CASE("Test-GeometricRange")
 
     SECTION("georngPromotingTransform")
     {
-        auto rng1 = detail::georngPromotingTransform(f1, f2, Plus{});
-        auto rng2 = detail::georngPromotingTransform(f1, scalar(1), Plus{});
-        auto rng3 = detail::georngPromotingTransform(scalar(1), f2, Plus{});
+        auto rng1 = georngPromotingTransform(f1, f2, Plus{});
+        auto rng2 = georngPromotingTransform(f1, scalar(1), Plus{});
+        auto rng3 = georngPromotingTransform(scalar(1), f2, Plus{});
 
         CHECK(rng1.dimensions() == dimless);
         CHECK(rng2.dimensions() == dimless);

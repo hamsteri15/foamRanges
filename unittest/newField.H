@@ -65,14 +65,14 @@ constexpr auto mag2(const Range_t& rng)
 template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>
 constexpr auto plus(const T1& rng1, const T2& rng2)
 {
-    return detail::rngPromotingTransform(rng1, rng2, Plus{});
+    return rngPromotingTransform(rng1, rng2, Plus{});
 }
 
 
 template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>
 constexpr auto mult(const T1& rng1, const T2& rng2)
 {
-    return detail::rngPromotingTransform(rng1, rng2, Multiplies{});
+    return rngPromotingTransform(rng1, rng2, Multiplies{});
 }
 
 } // namespace Foam
