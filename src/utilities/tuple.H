@@ -1,7 +1,7 @@
 #pragma once
 
 #include <tuple> //std::tuple
-#include "compiler_primitives.hpp"
+#include "compilerPrimitives.H"
 
 #ifdef __NVIDIA_COMPILER__
 #include <thrust/tuple.h>

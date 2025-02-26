@@ -1,8 +1,8 @@
 #pragma once
 
-#include "dimensioned_zip_range.hpp"
-#include "dimensioned_transform_range.hpp"
-#include "apply_binary_op.hpp"
+#include "dimensionedZipRange.H"
+#include "dimensionedTransformRange.H"
+#include "applyBinaryOp.H"
 
 namespace FoamRanges {
 
@@ -12,7 +12,7 @@ struct DimensionedTransform {
 
     template <class Rng, class UnaryOp>
     constexpr auto operator()(const Rng& rng, UnaryOp&& f) const {
-        return make_dimensioned_transform_range
+        return makeDimensionedTransformRange
         (
             rng,
             std::forward<UnaryOp>(f),
@@ -25,7 +25,7 @@ struct DimensionedTransform {
     constexpr auto
     operator()(const Rng1& rng1, const Rng2& rng2, BinaryOp&& f) const {
 
-        return make_dimensioned_transform_range
+        return makeDimensionedTransformRange
         (
             rng1, rng2,
             ApplyBinaryOp<BinaryOp>(std::forward<BinaryOp>(f)),
@@ -39,7 +39,7 @@ struct DimensionedTransform {
 
 } // namespace detail
 
-inline constexpr const auto dimensioned_transform =
+inline constexpr const auto dimensionedTransform =
     detail::DimensionedTransform{};
 
 } // namespace FoamRanges

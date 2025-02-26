@@ -1,10 +1,10 @@
 #pragma once
 
-#include "constant_iterator.hpp"
-#include "dimensioned_constant_range.hpp"
-#include "geometric_range.hpp"
-#include "md_constant_range.hpp"
-#include "md_range.hpp"
+#include "constantIterator.H"
+#include "dimensionedConstantRange.H"
+#include "geometricRange.H"
+#include "mdConstantRange.H"
+#include "mdRange.H"
 
 namespace FoamRanges {
 
@@ -22,12 +22,12 @@ struct GeometricConstantRange
 };
 
 template <typename Value, typename GeoMesh>
-constexpr auto make_geometric_constant_range(const Foam::dimensioned<Value>& v,
+constexpr auto makeGeoConstantRange(const Foam::dimensioned<Value>& v,
                                              const GeoMesh& mesh) {
 
     return GeometricConstantRange<Value, GeoMesh>(
-        make_dimensioned_constant_range(v, mesh.size(), mesh),
-        make_md_constant_range(v.value()));
+        makeDimConstantRange(v, mesh.size(), mesh),
+        makeMdConstantRange(v.value()));
 }
 
 } // namespace FoamRanges

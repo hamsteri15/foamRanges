@@ -2,7 +2,7 @@
 
 #include <iterator>
 #include <type_traits>
-#include "compiler_primitives.hpp"
+#include "compilerPrimitives.H"
 
 
 #ifdef __NVIDIA_COMPILER__
@@ -15,25 +15,25 @@ namespace detail {
 #ifdef __NVIDIA_COMPILER__
 
 template <class Func, class Iter>
-using transform_iterator = thrust::transform_iterator<Func, Iter>;
+using transformIterator = thrust::transform_iterator<Func, Iter>;
 
 template <class Func, class Iter>
-inline constexpr auto make_transform_iterator(Iter it, const Func& f) {
-    return thrust::make_transform_iterator(it, f);
+inline constexpr auto makeTransformIterator(Iter it, const Func& f) {
+    return thrust::makeTransformIterator(it, f);
 }
 
 #else
 
 template <class Func, class Iter>
-class transform_iterator {
+class transformIterator {
 
 public:
     Iter m_it;
     Func m_func;
 
-    inline constexpr transform_iterator() = default;
+    inline constexpr transformIterator() = default;
 
-    inline constexpr transform_iterator(Iter it, const Func& func)
+    inline constexpr transformIterator(Iter it, const Func& func)
         : m_it(it)
         , m_func(func) {}
 
@@ -48,7 +48,7 @@ public:
     // using iterator_category = std::input_iterator_tag;
     using iterator_category = std::random_access_iterator_tag;
 
-    using my_type = transform_iterator<Func, Iter>;
+    using my_type = transformIterator<Func, Iter>;
 
     inline constexpr reference dereference() const { return m_func(*m_it); }
 
@@ -120,9 +120,9 @@ public:
 };
 
 template <class Func, class Iter>
-inline constexpr transform_iterator<Func, Iter>
-                    make_transform_iterator(Iter it, Func f) {
-    return transform_iterator<Func, Iter>(it, f);
+inline constexpr transformIterator<Func, Iter>
+                    makeTransformIterator(Iter it, Func f) {
+    return transformIterator<Func, Iter>(it, f);
 }
 
 #endif

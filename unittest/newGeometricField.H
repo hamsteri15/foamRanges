@@ -1,11 +1,11 @@
 #pragma once
 
 #include "primitiveFields.H"
-#include "traits.hpp"
-#include "copy.hpp"
+#include "traits.H"
+#include "copy.H"
 #include "operations.H"
 #include "DimensionedField.H"
-#include "promoting_transforms.hpp"
+#include "promotingTransforms.H"
 
 namespace Foam{
 
@@ -103,19 +103,19 @@ static inline NewGeometricField<Type, GeoMesh, PrimitiveField> toNewField
 template<class GeomRange_t, std::enable_if_t<IsFoamGeometricField_v<GeomRange_t>, bool> = true>
 constexpr auto mag2(const GeomRange_t& rng)
 {
-    return FoamRanges::geometric_transform(rng, Mag{});
+    return FoamRanges::geometricTransform(rng, Mag{});
 }
 
 template<class T1, class T2, std::enable_if_t<AtleastOneGeometricField_v<T1, T2>, bool> = true>
 constexpr auto plus(const T1& rng1, const T2& rng2)
 {
-    return detail::georng_promoting_transform(rng1, rng2, Plus{});
+    return detail::georngPromotingTransform(rng1, rng2, Plus{});
 }
 
 template<class T1, class T2, std::enable_if_t<AtleastOneGeometricField_v<T1, T2>, bool> = true>
 constexpr auto mult(const T1& rng1, const T2& rng2)
 {
-    return detail::georng_promoting_transform(rng1, rng2, Multiplies{});
+    return detail::georngPromotingTransform(rng1, rng2, Multiplies{});
 }
 
 

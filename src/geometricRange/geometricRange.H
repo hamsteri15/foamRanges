@@ -1,9 +1,9 @@
 #pragma once
 
-#include "md_range.hpp"
+#include "mdRange.H"
+#include "dimensionedRange.H"
 
 #include "dimensionSet.H"
-#include "dimensioned_range.hpp"
 
 namespace FoamRanges {
 
@@ -24,7 +24,7 @@ template <class Internal, class Boundary> struct GeometricRange {
         , m_boundary(std::forward<Boundary>(boundary)) {}
 
     constexpr const Foam::word& name() const { return m_internal.name(); }
-    constexpr const GeoMeshType mesh() const { return get_mesh(m_internal); }
+    constexpr const GeoMeshType mesh() const { return getGeoMesh(m_internal); }
 
     constexpr const Foam::dimensionSet& dimensions() const {
         return m_internal.dimensions();

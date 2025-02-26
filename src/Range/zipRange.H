@@ -1,8 +1,8 @@
 #pragma once
 
-#include "range.hpp"
-#include "tuple.hpp"
-#include "zip_iterator.hpp"
+#include "Range.H"
+#include "tuple.H"
+#include "zipIterator.H"
 
 #ifdef __NVIDIA_COMPILER__
 #include <thrust/iterator/zip_iterator.h>
@@ -54,7 +54,7 @@ struct ZipRange : public Range<detail::zip_iterator<IteratorTuple>> {
 };
 
 template <typename Range1_t, typename Range2_t>
-inline constexpr auto make_zip_range(const Range1_t& rng1,
+inline constexpr auto makeZipRange(const Range1_t& rng1,
                                      const Range2_t& rng2) {
 
     using iter1   = decltype(std::begin(rng1));

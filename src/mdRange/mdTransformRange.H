@@ -1,8 +1,7 @@
 #pragma once
 
-#include "md_constant_range.hpp"
-#include "md_range.hpp"
-#include "small_array.hpp"
+#include "mdConstantRange.H"
+#include "mdRange.H"
 
 // Here we do a bit of sorcery. Instead of having a cheap value type that we
 // always create and store by value in MdTransformRange and MdTransformZipRange
@@ -24,7 +23,7 @@ struct MdTransformRange : public MdRange {
 
 
     using transform_range_t
-        = decltype(make_transform_range(std::declval<std::decay_t<Rng>>()[0], std::declval<std::decay_t<UnaryFunction>>()));
+        = decltype(makeTransformRange(std::declval<std::decay_t<Rng>>()[0], std::declval<std::decay_t<UnaryFunction>>()));
     using iterator = typename transform_range_t::iterator;
     using value_type = typename std::iterator_traits<iterator>::value_type;
 
@@ -35,7 +34,7 @@ struct MdTransformRange : public MdRange {
         , m_f(std::forward<UnaryFunction>(f)) {}
 
     constexpr auto operator[](size_t i) const {
-        return make_transform_range(m_rng[i], m_f);
+        return makeTransformRange(m_rng[i], m_f);
     }
     constexpr auto size() const { return m_rng.size(); }
 
@@ -91,9 +90,9 @@ struct MdTransformZipRange : public MdRange {
         if constexpr (!detail::IsMdConstantRange_v<Rng1> && !detail::IsMdConstantRange_v<Rng2>) {
 
             return
-            make_transform_range
+            makeTransformRange
             (
-                make_zip_range
+                makeZipRange
                 (
                     m_rng1[i],
                     m_rng2[i]
@@ -103,23 +102,23 @@ struct MdTransformZipRange : public MdRange {
 
         }
         else if constexpr (detail::IsMdConstantRange_v<Rng1>) {
-            return make_transform_range
+            return makeTransformRange
             (
-                make_zip_range
+                makeZipRange
                 (
-                    make_constant_range(m_rng1.get_value(), m_rng2[i].size()),
+                    makeConstantRange(m_rng1.get_value(), m_rng2[i].size()),
                     m_rng2[i]
                 ),
                 m_f
             );
         }
         else{
-            return make_transform_range
+            return makeTransformRange
             (
-                make_zip_range
+                makeZipRange
                 (
                     m_rng1[i],
-                    make_constant_range(m_rng2.get_value(), m_rng1[i].size())
+                    makeConstantRange(m_rng2.get_value(), m_rng1[i].size())
                 ),
                 m_f
             );

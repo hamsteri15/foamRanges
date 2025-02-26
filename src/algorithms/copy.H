@@ -1,13 +1,11 @@
 #pragma once
 
-#include "range.hpp"
+#include "Range.H"
+#include <algorithm>
+
 
 #ifdef __NVIDIA_COMPILER__
-#include <thrust/async/copy.h>
 #include <thrust/copy.h>
-#else
-#include <algorithm>
-#include <future>
 #endif
 
 namespace FoamRanges {

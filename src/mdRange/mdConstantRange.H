@@ -1,7 +1,7 @@
 #pragma once
 
-#include "constant_iterator.hpp"
-#include "md_range.hpp"
+#include "constantIterator.H"
+#include "mdRange.H"
 
 namespace FoamRanges {
 
@@ -12,7 +12,7 @@ namespace FoamRanges {
 // operator[] of MdTransformZipRange.
 template <typename Value> struct MdConstantRange : public MdRange {
 
-    using iterator        = constant_iterator<Value>;
+    using iterator        = constantIterator<Value>;
     using value_type      = Value;
     using difference_type = std::ptrdiff_t;
 
@@ -27,7 +27,7 @@ private:
     const value_type m_value;
 };
 
-template <typename Value> constexpr auto make_md_constant_range(Value c) {
+template <typename Value> constexpr auto makeMdConstantRange(Value c) {
     return MdConstantRange<Value>(c);
 }
 

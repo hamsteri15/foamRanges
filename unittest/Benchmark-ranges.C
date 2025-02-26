@@ -11,7 +11,7 @@
 #include "operations.H"
 
 #include "dimensionedType.H"
-#include "promoting_transforms.hpp"
+#include "promotingTransforms.H"
 
 
 

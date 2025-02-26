@@ -1,9 +1,9 @@
 #pragma once
 
-#include "dimensioned_transform_range.hpp"
-#include "dimensioned_zip_range.hpp"
-#include "geometric_range.hpp"
-#include "md_transform_range.hpp"
+#include "dimensionedTransformRange.H"
+#include "dimensionedZipRange.H"
+#include "geometricRange.H"
+#include "mdTransformRange.H"
 
 
 
@@ -29,11 +29,11 @@ make_geometric_transform_range(const GeomRange_t&        rng,
 
 
     using boundary = decltype(make_md_transform_range(rng.boundaryField(), f));
-    using internal = decltype(make_dimensioned_transform_range(
+    using internal = decltype(makeDimensionedTransformRange(
         rng.internalField(), f, dimensions, name));
 
     return GeometricTransformRange<internal, boundary>{
-        make_dimensioned_transform_range(
+        makeDimensionedTransformRange(
             rng.internalField(), f, dimensions, name),
         make_md_transform_range(rng.boundaryField(), f)};
 
@@ -49,15 +49,15 @@ make_geometric_transform_range(const Rng1&               rng1,
 
     using boundary = decltype(make_md_transform_range(
         rng1.boundaryField(), rng2.boundaryField(), f));
-    using internal = decltype(make_dimensioned_transform_range(
-        make_dimensioned_zip_range(rng1.internalField(), rng2.internalField()),
+    using internal = decltype(makeDimensionedTransformRange(
+        makeDimensionedZipRange(rng1.internalField(), rng2.internalField()),
         f,
         dimensions,
         name));
 
     return GeometricTransformRange<internal, boundary>(
-        make_dimensioned_transform_range(
-            make_dimensioned_zip_range(rng1.internalField(),
+        makeDimensionedTransformRange(
+            makeDimensionedZipRange(rng1.internalField(),
                                        rng2.internalField()),
             f,
             dimensions,

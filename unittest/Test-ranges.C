@@ -9,7 +9,7 @@
 #include "operations.H"
 
 #include "dimensionedType.H"
-#include "promoting_transforms.hpp"
+#include "promotingTransforms.H"
 
 
 using namespace Foam;
@@ -42,11 +42,11 @@ TEST_CASE("Test-Range"){
 
     }
 
-    SECTION("rng_promoting_transform")
+    SECTION("rngPromotingTransform")
     {
-        auto rng1 = detail::rng_promoting_transform(f1, f2, Plus{});
-        auto rng2 = detail::rng_promoting_transform(f1, scalar(1), Plus{});
-        auto rng3 = detail::rng_promoting_transform(scalar(1), f2, Plus{});
+        auto rng1 = detail::rngPromotingTransform(f1, f2, Plus{});
+        auto rng2 = detail::rngPromotingTransform(f1, scalar(1), Plus{});
+        auto rng3 = detail::rngPromotingTransform(scalar(1), f2, Plus{});
 
         CHECK(MockField<scalar>(rng1) == MockField<scalar>({2, 4, 6}));
         CHECK(MockField<scalar>(rng2) == MockField<scalar>({2, 3, 4}));
@@ -91,12 +91,12 @@ TEST_CASE("Test-MdRange")
     MockFieldField f1 = MockFieldField();
     const MockFieldField f2 = MockFieldField();
 
-    SECTION("md_transform")
+    SECTION("mdTransform")
     {
         SECTION("unary")
         {
-            auto rng1 = FoamRanges::md_transform(f1, PlusOne{});
-            auto rng2 = FoamRanges::md_transform(f2, PlusOne{});
+            auto rng1 = FoamRanges::mdTransform(f1, PlusOne{});
+            auto rng2 = FoamRanges::mdTransform(f2, PlusOne{});
 
             CHECK(MockField<scalar>(rng1[0]) == MockField<scalar>({2, 2, 2}));
             CHECK(MockField<scalar>(rng1[1]) == MockField<scalar>({3, 3, 3, 3}));
@@ -110,8 +110,8 @@ TEST_CASE("Test-MdRange")
 
         SECTION("binary")
         {
-            auto rng1 = FoamRanges::md_transform(f1, f2, Plus{});
-            auto rng2 = FoamRanges::md_transform(f2, f1, Plus{});
+            auto rng1 = FoamRanges::mdTransform(f1, f2, Plus{});
+            auto rng2 = FoamRanges::mdTransform(f2, f1, Plus{});
 
             CHECK(MockField<scalar>(rng1[0]) == MockField<scalar>({2, 2, 2}));
             CHECK(MockField<scalar>(rng1[1]) == MockField<scalar>({4, 4, 4, 4}));
@@ -126,11 +126,11 @@ TEST_CASE("Test-MdRange")
 
     }
 
-    SECTION("md_promoting_transform")
+    SECTION("mdrngPromotingTransform")
     {
-        auto rng1 = detail::md_promoting_transform(f1, f2, Plus{});
-        auto rng2 = detail::md_promoting_transform(scalar(1), f2, Plus{});
-        auto rng3 = detail::md_promoting_transform(f1, scalar(1), Plus{});
+        auto rng1 = detail::mdrngPromotingTransform(f1, f2, Plus{});
+        auto rng2 = detail::mdrngPromotingTransform(scalar(1), f2, Plus{});
+        auto rng3 = detail::mdrngPromotingTransform(f1, scalar(1), Plus{});
 
         CHECK(MockField<scalar>(rng1[0]) == MockField<scalar>({2, 2, 2}));
         CHECK(MockField<scalar>(rng1[1]) == MockField<scalar>({4, 4, 4, 4}));
@@ -151,7 +151,7 @@ TEST_CASE("Test-MdRange")
         SECTION("No temporary")
         {
             auto func = [](const MockFieldField& in){
-                return FoamRanges::md_transform(in, PlusOne{});
+                return FoamRanges::mdTransform(in, PlusOne{});
             };
             auto rng = func(f1);
             CHECK(MockField<scalar>(rng[0]) == MockField<scalar>({2, 2, 2}));
@@ -162,7 +162,7 @@ TEST_CASE("Test-MdRange")
         SECTION("With temporary")
         {
             auto func = [](const MockFieldField& in){
-                return FoamRanges::md_transform(FoamRanges::md_transform(in, PlusOne{}), PlusOne{});
+                return FoamRanges::mdTransform(FoamRanges::mdTransform(in, PlusOne{}), PlusOne{});
             };
             auto rng = func(f1);
             CHECK(MockField<scalar>(rng[0]) == MockField<scalar>({3, 3, 3}));
@@ -176,8 +176,8 @@ TEST_CASE("Test-MdRange")
             /*
             auto func = [](const MockFieldField& in){
                 //This goes out of scope because MdTransformRange stores a reference to the temporary
-                const auto rng = FoamRanges::md_transform(in, PlusOne{});
-                return FoamRanges::md_transform(rng, PlusOne{});
+                const auto rng = FoamRanges::mdTransform(in, PlusOne{});
+                return FoamRanges::mdTransform(rng, PlusOne{});
             };
             auto rng = func(f1);
             CHECK(MockField<scalar>(rng[0]) == MockField<scalar>({3, 3, 3}));
@@ -198,12 +198,12 @@ TEST_CASE("Test-DimensionedRange")
     const MockDimField f2 = MockDimField();
 
 
-    SECTION("dimensioned_transform")
+    SECTION("dimensionedTransform")
     {
         SECTION("unary")
         {
-            auto rng1 = FoamRanges::dimensioned_transform(f1, PlusOne{});
-            auto rng2 = FoamRanges::dimensioned_transform(f2, PlusOne{});
+            auto rng1 = FoamRanges::dimensionedTransform(f1, PlusOne{});
+            auto rng2 = FoamRanges::dimensionedTransform(f2, PlusOne{});
             CHECK(rng1.dimensions() == dimless);
             CHECK(rng2.dimensions() == dimless);
             CHECK(rng1.name() == "p");
@@ -214,8 +214,8 @@ TEST_CASE("Test-DimensionedRange")
 
         SECTION("binary")
         {
-            auto rng1 = FoamRanges::dimensioned_transform(f1, f2, Plus{});
-            auto rng2 = FoamRanges::dimensioned_transform(f2, f1, Plus{});
+            auto rng1 = FoamRanges::dimensionedTransform(f1, f2, Plus{});
+            auto rng2 = FoamRanges::dimensionedTransform(f2, f1, Plus{});
             CHECK(rng1.dimensions() == dimless);
             CHECK(rng2.dimensions() == dimless);
             CHECK(rng1.name() == "(p+p)");
@@ -228,9 +228,9 @@ TEST_CASE("Test-DimensionedRange")
 
     SECTION("dimensioned_promoting_transform")
     {
-        auto rng1 = detail::dimrng_promoting_transform(f1, f2, Plus{});
-        auto rng2 = detail::dimrng_promoting_transform(f1, scalar(1), Plus{});
-        auto rng3 = detail::dimrng_promoting_transform(scalar(1), f2, Plus{});
+        auto rng1 = detail::dimrngPromotingTransform(f1, f2, Plus{});
+        auto rng2 = detail::dimrngPromotingTransform(f1, scalar(1), Plus{});
+        auto rng3 = detail::dimrngPromotingTransform(scalar(1), f2, Plus{});
 
         CHECK(rng1.dimensions() == dimless);
         CHECK(rng2.dimensions() == dimless);
@@ -249,7 +249,7 @@ TEST_CASE("Test-DimensionedRange")
         SECTION("No temporary")
         {
             auto func = [](const MockDimField& in){
-                return FoamRanges::dimensioned_transform(in, PlusOne{});
+                return FoamRanges::dimensionedTransform(in, PlusOne{});
             };
             auto rng = func(f1);
             CHECK(rng.dimensions() == dimless);
@@ -260,7 +260,7 @@ TEST_CASE("Test-DimensionedRange")
         SECTION("With temporary")
         {
             auto func = [](const MockDimField& in){
-                return FoamRanges::dimensioned_transform(FoamRanges::dimensioned_transform(in, PlusOne{}), PlusOne{});
+                return FoamRanges::dimensionedTransform(FoamRanges::dimensionedTransform(in, PlusOne{}), PlusOne{});
             };
             auto rng = func(f1);
             CHECK(rng.dimensions() == dimless);
@@ -273,8 +273,8 @@ TEST_CASE("Test-DimensionedRange")
 
             auto func = [](const MockDimField& in){
                 //This wont go out of scope because DimensionedTransformRange stores a copy of the interators
-                const auto rng = FoamRanges::dimensioned_transform(in, PlusOne{});
-                return FoamRanges::dimensioned_transform(rng, PlusOne{});
+                const auto rng = FoamRanges::dimensionedTransform(in, PlusOne{});
+                return FoamRanges::dimensionedTransform(rng, PlusOne{});
             };
             auto rng = func(f1);
             CHECK(rng.dimensions() == dimless);
@@ -292,12 +292,12 @@ TEST_CASE("Test-GeometricRange")
 
 
 
-    SECTION("geometric_transform")
+    SECTION("geometricTransform")
     {
         SECTION("unary")
         {
-            auto rng1 = FoamRanges::geometric_transform(f1, PlusOne{});
-            auto rng2 = FoamRanges::geometric_transform(f2, PlusOne{});
+            auto rng1 = FoamRanges::geometricTransform(f1, PlusOne{});
+            auto rng2 = FoamRanges::geometricTransform(f2, PlusOne{});
             CHECK(rng1.dimensions() == dimless);
             CHECK(rng2.dimensions() == dimless);
             CHECK(rng1.name() == "p");
@@ -317,8 +317,8 @@ TEST_CASE("Test-GeometricRange")
 
         SECTION("binary")
         {
-            auto rng1 = FoamRanges::geometric_transform(f1, f2, Plus{});
-            auto rng2 = FoamRanges::geometric_transform(f2, f1, Plus{});
+            auto rng1 = FoamRanges::geometricTransform(f1, f2, Plus{});
+            auto rng2 = FoamRanges::geometricTransform(f2, f1, Plus{});
             CHECK(rng1.dimensions() == dimless);
             CHECK(rng2.dimensions() == dimless);
             CHECK(rng1.name() == "(p+p)");
@@ -336,11 +336,11 @@ TEST_CASE("Test-GeometricRange")
         }
     }
 
-    SECTION("georng_promoting_transform")
+    SECTION("georngPromotingTransform")
     {
-        auto rng1 = detail::georng_promoting_transform(f1, f2, Plus{});
-        auto rng2 = detail::georng_promoting_transform(f1, scalar(1), Plus{});
-        auto rng3 = detail::georng_promoting_transform(scalar(1), f2, Plus{});
+        auto rng1 = detail::georngPromotingTransform(f1, f2, Plus{});
+        auto rng2 = detail::georngPromotingTransform(f1, scalar(1), Plus{});
+        auto rng3 = detail::georngPromotingTransform(scalar(1), f2, Plus{});
 
         CHECK(rng1.dimensions() == dimless);
         CHECK(rng2.dimensions() == dimless);
@@ -370,7 +370,7 @@ TEST_CASE("Test-GeometricRange")
         SECTION("No temporary")
         {
             auto func = [](const MockGeoField& in){
-                return FoamRanges::geometric_transform(in, PlusOne{});
+                return FoamRanges::geometricTransform(in, PlusOne{});
             };
             auto rng = func(f1);
             CHECK(rng.dimensions() == dimless);
@@ -384,7 +384,7 @@ TEST_CASE("Test-GeometricRange")
         SECTION("With temporary")
         {
             auto func = [](const MockGeoField& in){
-                return FoamRanges::geometric_transform(FoamRanges::geometric_transform(in, PlusOne{}), PlusOne{});
+                return FoamRanges::geometricTransform(FoamRanges::geometricTransform(in, PlusOne{}), PlusOne{});
             };
             auto rng = func(f1);
             CHECK(rng.dimensions() == dimless);
@@ -401,8 +401,8 @@ TEST_CASE("Test-GeometricRange")
                 //No idea why this works.
                 //The temporary should go out of scope because the
                 //MdTransformRange of a GeometricTransformRange stores a reference to the temporary.
-                const auto rng = FoamRanges::geometric_transform(in, PlusOne{});
-                return FoamRanges::geometric_transform(rng, PlusOne{});
+                const auto rng = FoamRanges::geometricTransform(in, PlusOne{});
+                return FoamRanges::geometricTransform(rng, PlusOne{});
             };
             auto rng = func(f1);
             CHECK(rng.dimensions() == dimless);

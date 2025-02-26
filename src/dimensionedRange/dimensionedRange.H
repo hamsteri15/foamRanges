@@ -1,7 +1,7 @@
 #pragma once
 
 #include "dimensionSet.H"
-#include "range.hpp"
+#include "Range.H"
 
 namespace FoamRanges {
 
@@ -38,7 +38,7 @@ private:
     Foam::word         m_name;
 };
 
-template <class DimRange> constexpr auto get_mesh(const DimRange& rng) {
+template <class DimRange> constexpr auto getGeoMesh(const DimRange& rng) {
 
     using mesh_type = decltype(rng.mesh());
     if constexpr (std::is_same_v<mesh_type, typename DimRange::GeoMeshType>) {
@@ -51,19 +51,19 @@ template <class DimRange> constexpr auto get_mesh(const DimRange& rng) {
 template <class DimRange>
 constexpr auto make_dimensioned_range(const DimRange& rng) {
     using Iterator = decltype(rng.primitiveField().begin());
-    using GeoMesh  = decltype(get_mesh(rng));
+    using GeoMesh  = decltype(getGeoMesh(rng));
     return DimensionedRange<Iterator, GeoMesh>(rng.primitiveField(),
                                                rng.dimensions(),
-                                               get_mesh(rng),
+                                               getGeoMesh(rng),
                                                rng.name());
 }
 
 template <class DimRange> constexpr auto make_dimensioned_range(DimRange& rng) {
     using Iterator = decltype(rng.primitiveField().begin());
-    using GeoMesh  = decltype(get_mesh(rng));
+    using GeoMesh  = decltype(getGeoMesh(rng));
     return DimensionedRange<Iterator, GeoMesh>(rng.primitiveField(),
                                                rng.dimensions(),
-                                               get_mesh(rng),
+                                               getGeoMesh(rng),
                                                rng.name());
 }
 

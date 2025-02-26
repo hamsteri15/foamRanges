@@ -1,6 +1,6 @@
 #pragma once
 
-#include "md_transform_range.hpp"
+#include "mdTransformRange.H"
 
 namespace FoamRanges {
 namespace detail {
@@ -24,6 +24,6 @@ struct MdTransform {
 
 } // namespace detail
 
-inline constexpr const auto md_transform = detail::MdTransform{};
+inline constexpr const auto mdTransform = detail::MdTransform{};
 
 } // namespace FoamRanges

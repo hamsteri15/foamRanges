@@ -1,16 +1,16 @@
 #pragma once
 
-#include "constant_iterator.hpp"
-#include "dimensioned_range.hpp"
+#include "constantIterator.H"
+#include "dimensionedRange.H"
 
 namespace FoamRanges {
 
 template <class Value, class GeoMesh>
 struct DimensionedConstantRange
-    : public DimensionedRange<constant_iterator<Value>, GeoMesh> {
+    : public DimensionedRange<constantIterator<Value>, GeoMesh> {
 
-    // using iterator        = constant_iterator<Value>;
-    using parent = DimensionedRange<constant_iterator<Value>, GeoMesh>;
+    // using iterator        = constantIterator<Value>;
+    using parent = DimensionedRange<constantIterator<Value>, GeoMesh>;
     using typename parent::difference_type;
     using typename parent::value_type;
 
@@ -19,11 +19,11 @@ struct DimensionedConstantRange
                                        const Foam::dimensionSet& dimensions,
                                        const GeoMesh&            mesh,
                                        const Foam::word&         name)
-        : parent(make_constant_range(c, size), dimensions, mesh, name) {}
+        : parent(makeConstantRange(c, size), dimensions, mesh, name) {}
 };
 
 template <typename Value, typename Size, typename GeoMesh>
-constexpr auto make_dimensioned_constant_range(
+constexpr auto makeDimConstantRange(
     const Foam::dimensioned<Value>& v, Size size, const GeoMesh& mesh) {
 
     return DimensionedConstantRange<Value, GeoMesh>(

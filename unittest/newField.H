@@ -1,10 +1,10 @@
 #pragma once
 
 #include "primitiveFields.H"
-#include "traits.hpp"
-#include "copy.hpp"
+#include "traits.H"
+#include "copy.H"
 #include "operations.H"
-#include "promoting_transforms.hpp"
+#include "promotingTransforms.H"
 
 namespace Foam{
 
@@ -44,7 +44,7 @@ struct NewField : public Field<T>{
 template<class T>
 static inline NewField<T> toNewField(const Field<T>& f)
 {
-    return NewField<T>(FoamRanges::make_range(f));
+    return NewField<T>(FoamRanges::makeRange(f));
 }
 
 template<class T>
@@ -65,14 +65,14 @@ constexpr auto mag2(const Range_t& rng)
 template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>
 constexpr auto plus(const T1& rng1, const T2& rng2)
 {
-    return detail::rng_promoting_transform(rng1, rng2, Plus{});
+    return detail::rngPromotingTransform(rng1, rng2, Plus{});
 }
 
 
 template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>
 constexpr auto mult(const T1& rng1, const T2& rng2)
 {
-    return detail::rng_promoting_transform(rng1, rng2, Multiplies{});
+    return detail::rngPromotingTransform(rng1, rng2, Multiplies{});
 }
 
 } // namespace Foam

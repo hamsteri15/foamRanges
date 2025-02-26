@@ -1,9 +1,9 @@
 #pragma once
 
-#include "geometric_transform_range.hpp"
-#include "md_transform.hpp"
-#include "dimensioned_transform.hpp"
-#include "apply_binary_op.hpp"
+#include "geometricTransformRange.H"
+#include "mdTransform.H"
+#include "dimensionedTransform.H"
+#include "applyBinaryOp.H"
 namespace FoamRanges {
 
 namespace detail {
@@ -42,6 +42,6 @@ struct GeometricTransform {
 
 } // namespace detail
 
-inline constexpr const auto geometric_transform = detail::GeometricTransform{};
+inline constexpr const auto geometricTransform = detail::GeometricTransform{};
 
 } // namespace FoamRanges
