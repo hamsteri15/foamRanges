@@ -22,6 +22,11 @@ NewVolScalarField func1(const NewVolScalarField& f)
     return plus(f, f);
 }
 
+auto func2(const NewVolScalarField& f)
+{
+    return plus(f, f);
+}
+
 }
 
 
@@ -32,22 +37,19 @@ TEST_CASE("Test-newFieldRanges")
     Foam::argList& args = getFoamArgs();
     FieldReader reader(args);
 
-    using scalarFieldType = NewField<scalar>;
-    using vectorFieldType = NewField<vector>;
-    using volScalarFieldType = NewVolScalarField;
-    using volVectorFieldType = NewVolVectorField;
 
-    volScalarFieldType p = toNewField(reader.read_scalarField("p"));
+
+    NewVolScalarField p = toNewField(reader.read_scalarField("p"));
     SECTION("Implicit cast from Rng -> NewGeometricField")
     {
         CHECK(approxEqual(func1(p) , volScalarField(p + p)));
     }
-
-    /*
-    SECTION("scalarField")
+    SECTION("Implicit cast from Rng -> const NewGeometricField&")
     {
-        scalarFieldType f = toNewField(reader.read_scalarField("p").internalField().primitiveField());
+        auto rng = func2(plus(p, p));
+        CHECK(approxEqual(NewVolScalarField(rng), volScalarField(p + p + p)));
+    }
 
-    */
+    
 
 }
