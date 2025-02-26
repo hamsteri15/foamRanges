@@ -38,6 +38,7 @@ SourceFiles
 #include "operations.H"
 #include "DimensionedField.H"
 #include "promotingTransforms.H"
+#include "isAddable.H"
 
 namespace Foam
 {
@@ -129,9 +130,13 @@ constexpr auto mag2(const GeomRange_t& rng)
     return FoamRanges::geometricTransform(rng, Mag{});
 }
 
+
 template<class T1, class T2, std::enable_if_t<AtleastOneGeometricField_v<T1, T2>, bool> = true>
 constexpr auto plus(const T1& rng1, const T2& rng2)
 {
+    //static_assert(is_addable_v<typename T1::value_type, typename T2::value_type>, 
+    //    "Error: Plus::operator() requires Lhs + Rhs to be valid.");
+
     return georngPromotingTransform(rng1, rng2, Plus{});
 }
 

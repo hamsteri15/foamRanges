@@ -34,9 +34,11 @@ SourceFiles
 #include "dimensionSet.H"
 #include "word.H"
 #include "scalar.H"
+#include "isAddable.H"
 
 namespace Foam
 {
+
 
 struct PlusOne
 {
@@ -60,11 +62,13 @@ struct Mag
     }
 };
 
+
 struct Plus
 {
     template<class Lhs, class Rhs>
     inline auto operator()(const Lhs& lhs, const Rhs& rhs) const
     {
+        static_assert(is_addable_v<Lhs, Rhs>, "Error: Plus::operator() requires Lhs + Rhs to be valid.");
         return lhs + rhs;
     }
 
@@ -73,6 +77,8 @@ struct Plus
         return "(" + lhs + '+' + rhs + ')';
     }
 };
+
+
 
 struct Multiplies
 {
