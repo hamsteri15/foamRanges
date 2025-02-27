@@ -86,7 +86,7 @@ static inline NewField<T> toNewField(const tmp<Field<T>>& f)
 template<class Range_t, std::enable_if_t<IsFoamField_v<Range_t>, bool> = true>
 constexpr auto mag2(const Range_t& rng)
 {
-    return FoamRanges::transform(rng, Mag{});
+    return FoamRanges::rngTransform(rng, Mag{});
 }
 
 template<class T1, class T2, std::enable_if_t<AtleastOneFoamField_v<T1, T2>, bool> = true>

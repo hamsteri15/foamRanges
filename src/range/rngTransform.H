@@ -22,13 +22,13 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Class
-    FoamRanges::transform
+    FoamRanges::rngTransform
 
 Description
     Functions for creating transform ranges.
 
 SourceFiles
-    
+
 
 \*---------------------------------------------------------------------------*/
 
@@ -42,13 +42,13 @@ namespace FoamRanges
 {
 
 template<class Range_t, class UnaryOp>
-inline constexpr auto transform(const Range_t& rng, const UnaryOp& f)
+inline constexpr auto rngTransform(const Range_t& rng, const UnaryOp& f)
 {
     return makeTransformRange(rng, f);
 }
 
 template<class Range1_t, class Range2_t, class BinaryOp>
-inline constexpr auto transform
+inline constexpr auto rngTransform
 (
     const Range1_t& rng1,
     const Range2_t& rng2,

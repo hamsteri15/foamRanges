@@ -24,8 +24,8 @@ TEST_CASE("Test-Range"){
 
         SECTION("unary")
         {
-            auto rng1 = FoamRanges::transform(f1, PlusOne{});
-            auto rng2 = FoamRanges::transform(f2, PlusOne{});
+            auto rng1 = FoamRanges::rngTransform(f1, PlusOne{});
+            auto rng2 = FoamRanges::rngTransform(f2, PlusOne{});
 
             CHECK(MockField<scalar>(rng1) == MockField<scalar>({2, 3, 4}));
             CHECK(MockField<scalar>(rng2) == MockField<scalar>({2, 3, 4}));
@@ -33,8 +33,8 @@ TEST_CASE("Test-Range"){
 
         SECTION("binary")
         {
-            auto rng1 = FoamRanges::transform(f1, f2, Plus{});
-            auto rng2 = FoamRanges::transform(f2, f1, Plus{});
+            auto rng1 = FoamRanges::rngTransform(f1, f2, Plus{});
+            auto rng2 = FoamRanges::rngTransform(f2, f1, Plus{});
 
             CHECK(MockField<scalar>(rng1) == MockField<scalar>({2, 4, 6}));
             CHECK(MockField<scalar>(rng2) == MockField<scalar>({2, 4, 6}));
@@ -58,7 +58,7 @@ TEST_CASE("Test-Range"){
         SECTION("No temporary")
         {
             auto func = [](const MockField<scalar>& in){
-                return FoamRanges::transform(in, PlusOne{});
+                return FoamRanges::rngTransform(in, PlusOne{});
             };
             auto rng = func(f1);
             CHECK(MockField<scalar>(rng) == MockField<scalar>({2, 3, 4}));
@@ -66,7 +66,7 @@ TEST_CASE("Test-Range"){
         SECTION("With temporary")
         {
             auto func = [](const MockField<scalar>& in){
-                return FoamRanges::transform(FoamRanges::transform(in, PlusOne{}), PlusOne{});
+                return FoamRanges::rngTransform(FoamRanges::rngTransform(in, PlusOne{}), PlusOne{});
             };
             auto rng = func(f1);
             CHECK(MockField<scalar>(rng) == MockField<scalar>({3, 4, 5}));
@@ -74,9 +74,9 @@ TEST_CASE("Test-Range"){
         SECTION("With named temporary")
         {
             auto func = [](const MockField<scalar>& in){
-                const auto rng = FoamRanges::transform(in, PlusOne{});
-                //return MockField<scalar>(FoamRanges::transform(rng, PlusOne{}));
-                return FoamRanges::transform(rng, PlusOne{});
+                const auto rng = FoamRanges::rngTransform(in, PlusOne{});
+                //return MockField<scalar>(FoamRanges::rngTransform(rng, PlusOne{}));
+                return FoamRanges::rngTransform(rng, PlusOne{});
             };
             auto rng = func(f1);
             CHECK(MockField<scalar>(rng) == MockField<scalar>({3, 4, 5}));

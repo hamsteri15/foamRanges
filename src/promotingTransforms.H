@@ -27,7 +27,7 @@ License
 
 #include "traits.H"
 #include "constantRange.H"
-#include "transform.H"
+#include "rngTransform.H"
 #include "dimensionedConstantRange.H"
 #include "dimensionedTransform.H"
 #include "geometricConstantRange.H"
@@ -45,11 +45,11 @@ constexpr auto rngPromotingTransform(const T1& lhs, const T2& rhs, BinaryOp f)
 {
     if constexpr (BothFoamField_v<T1, T2>)
     {
-        return FoamRanges::transform(lhs, rhs, f);
+        return FoamRanges::rngTransform(lhs, rhs, f);
     }
     else if constexpr (IsFoamField_v<T1>)
     {
-        return FoamRanges::transform
+        return FoamRanges::rngTransform
         (
             lhs,
             FoamRanges::makeConstantRange(rhs, std::size(lhs)),
@@ -58,7 +58,7 @@ constexpr auto rngPromotingTransform(const T1& lhs, const T2& rhs, BinaryOp f)
     }
     else
     {
-        return FoamRanges::transform
+        return FoamRanges::rngTransform
         (
             FoamRanges::makeConstantRange(lhs, std::size(rhs)),
             rhs,
