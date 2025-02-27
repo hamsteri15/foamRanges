@@ -8,7 +8,6 @@
 * You will need a C++17 supporting compiler
 * Source the latest OpenFOAM development version and run ./Allwmake
 
-
 ## **Running tests and benchmarks**
 * Go to a case folder which has fields p and U in 0 folder and type 
 ``` Test-Ranges --benchmark-no-analysis ```
