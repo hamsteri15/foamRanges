@@ -28,7 +28,7 @@ Description
     Functions for creating geometric transform ranges.
 
 SourceFiles
-    
+
 
 \*---------------------------------------------------------------------------*/
 
@@ -49,8 +49,8 @@ constexpr auto geometricTransform(const Rng& rng, UnaryOp&& f)
     (
         rng,
         std::forward<UnaryOp>(f),
-        f(rng.dimensions()),
-        f(rng.name())
+        f(rng.internalField().dimensions()),
+        f(rng.internalField().name())
     );
 }
 
@@ -62,8 +62,8 @@ constexpr auto geometricTransform(const Range1_t& rng1, const Range2_t& rng2, co
         rng1,
         rng2,
         detail::ApplyBinaryOp<BinaryOp>(f),
-        f(rng1.dimensions(), rng2.dimensions()),
-        f(rng1.name(), rng2.name())
+        f(rng1.internalField().dimensions(), rng2.internalField().dimensions()),
+        f(rng1.internalField().name(), rng2.internalField().name())
     );
 }
 

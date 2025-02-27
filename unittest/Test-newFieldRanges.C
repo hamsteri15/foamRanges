@@ -67,7 +67,7 @@ TEST_CASE("Test-newFieldRanges")
         CHECK(approxEqual(NewVolScalarField(rng), volScalarField((p + p) + (p + p))));
     }
 
-    
+
     SECTION("Implicit cast from Range -> const NewVolScalarField& and return a range")
     {
         //TODO: This should work...
@@ -86,6 +86,6 @@ TEST_CASE("Test-newFieldRanges")
 
 
 
-    
+
 
 }
