@@ -24,13 +24,13 @@ License
 \*---------------------------------------------------------------------------*/
 
 #pragma once
-
 #include "compilerPrimitives.H"
 #include "Range.H"
-#include <algorithm>
+#include <numeric>
+#include <functional>
 
 #ifdef __NVIDIA_COMPILER__
-#include <thrust/copy.h>
+#include <thrust/reduce.h>
 #endif
 
 namespace FoamRanges
@@ -38,18 +38,18 @@ namespace FoamRanges
 
 #ifdef __NVIDIA_COMPILER__
 
-template<class Range1_t, class Range2_t>
-void copy(const Range1_t& src, Range2_t& dst)
+template<class Rng, class T, class BinaryOp>
+constexpr auto reduce(const Rng& rng, T init, BinaryOp op = thrust::plus<T>())
 {
-    thrust::copy(thrust::device, src.begin(), src.end(), dst.begin());
+    return thrust::reduce(rng.begin(), rng.end(), init, op);
 }
 
 #else
 
-template<class Range1_t, class Range2_t>
-void copy(const Range1_t& src, Range2_t& dst)
+template<class Rng, class T, class BinaryOp>
+constexpr auto reduce(const Rng& rng, T init, BinaryOp op = std::plus<T>())
 {
-    std::copy(src.begin(), src.end(), dst.begin());
+    return std::reduce(rng.begin(), rng.end(), init, op);
 }
 
 #endif

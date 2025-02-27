@@ -30,7 +30,7 @@ License
 #include <algorithm>
 
 #ifdef __NVIDIA_COMPILER__
-#include <thrust/copy.h>
+#include <thrust/extrema.h>
 #endif
 
 namespace FoamRanges
@@ -38,18 +38,31 @@ namespace FoamRanges
 
 #ifdef __NVIDIA_COMPILER__
 
-template<class Range1_t, class Range2_t>
-void copy(const Range1_t& src, Range2_t& dst)
+template<class Rng, class T, class BinaryOp>
+constexpr auto min_element(const Rng& rng, const BinaryOp& op)
 {
-    thrust::copy(thrust::device, src.begin(), src.end(), dst.begin());
+    return *thrust::min_element(rng.begin(), rng.end(), op);
 }
+
+template<class Rng, class T, class BinaryOp>
+constexpr auto max_element(const Rng& rng, const BinaryOp& op)
+{
+    return *thrust::max_element(rng.begin(), rng.end(), op);
+}
+
 
 #else
 
-template<class Range1_t, class Range2_t>
-void copy(const Range1_t& src, Range2_t& dst)
+template<class Rng, class T, class BinaryOp>
+constexpr auto min_element(const Rng& rng, const BinaryOp& op)
 {
-    std::copy(src.begin(), src.end(), dst.begin());
+    return *std::min_element(rng.begin(), rng.end(), op);
+}
+
+template<class Rng, class T, class BinaryOp>
+constexpr auto max_element(const Rng& rng, const BinaryOp& op)
+{
+    return *std::max_element(rng.begin(), rng.end(), op);
 }
 
 #endif
