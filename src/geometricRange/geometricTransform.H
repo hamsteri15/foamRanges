@@ -45,7 +45,7 @@ namespace FoamRanges
 template<class Rng, class UnaryOp>
 constexpr auto geometricTransform(const Rng& rng, UnaryOp&& f)
 {
-    return make_geometric_transform_range
+    return makeGeometricTransformRange
     (
         rng,
         std::forward<UnaryOp>(f),
@@ -57,7 +57,7 @@ constexpr auto geometricTransform(const Rng& rng, UnaryOp&& f)
 template<class Range1_t, class Range2_t, class BinaryOp>
 constexpr auto geometricTransform(const Range1_t& rng1, const Range2_t& rng2, const BinaryOp& f)
 {
-    return make_geometric_transform_range
+    return makeGeometricTransformRange
     (
         rng1,
         rng2,
