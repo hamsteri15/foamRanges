@@ -55,13 +55,9 @@ struct ApplyBinaryOp
     {}
 
     template<typename Tuple>
-    inline constexpr auto operator()(Tuple&& t) const
+    inline constexpr auto operator()(const Tuple& t) const
     {
-        return op
-        (
-            get<0>(std::forward<Tuple>(t)),
-            get<1>(std::forward<Tuple>(t))
-        );
+        return op(get<0>(t), get<1>(t));
     }
 };
 
