@@ -27,12 +27,14 @@ License
 
 #include <type_traits>
 #include <iterator>
+#include "concepts.H"
+
 
 namespace Foam
 {
 
-class gpuSurfaceMesh;
-class gpuVolMesh;
+class surfaceMesh;
+class volMesh;
 
 
 
@@ -290,10 +292,10 @@ template<typename T>
 using DeduceMeshType_t = typename DeduceMeshType<T>::type;
 
 template<class T>
-constexpr bool IsSurfaceField_v = std::is_same_v<DeduceMeshType_t<T>, gpuSurfaceMesh>;
+constexpr bool IsSurfaceField_v = std::is_same_v<DeduceMeshType_t<T>, surfaceMesh>;
 
 template<class T>
-constexpr bool IsVolumeField_v = std::is_same_v<DeduceMeshType_t<T>, gpuVolMesh>;
+constexpr bool IsVolumeField_v = std::is_same_v<DeduceMeshType_t<T>, volMesh>;
 
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
