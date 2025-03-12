@@ -19,7 +19,7 @@ using transformIterator = thrust::transform_iterator<Func, Iter>;
 
 template <class Func, class Iter>
 inline constexpr auto makeTransformIterator(Iter it, const Func& f) {
-    return thrust::makeTransformIterator(it, f);
+    return thrust::make_transform_iterator(it, f);
 }
 
 #else
