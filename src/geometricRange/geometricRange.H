@@ -26,7 +26,7 @@ Description
     Generic range type for geometric values with dimensions.
 
 SourceFiles
-    
+
 
 \*---------------------------------------------------------------------------*/
 
@@ -47,8 +47,8 @@ struct GeometricRange
     static constexpr bool is_foam_dimensioned_field = false;
     static constexpr bool is_foam_geometric_field   = true;
 
-    using GeoMeshType = typename Internal::GeoMeshType;
-    using iterator    = typename Internal::iterator;
+    using GeoMeshType = typename std::remove_reference_t<Internal>::GeoMeshType;
+    using iterator    = typename std::remove_reference_t<Internal>::iterator;
     using value_type  = typename std::iterator_traits<iterator>::value_type;
     using reference   = typename std::iterator_traits<iterator>::reference;
 
@@ -93,5 +93,15 @@ private:
     Internal m_internal;
     Boundary m_boundary;
 };
+
+template<class Internal, class Boundary>
+static constexpr auto makeGeometricRange(Internal&& internal, Boundary&& boundary)
+{
+    return GeometricRange<Internal, Boundary>
+    (
+        std::forward<Internal>(internal), std::forward<Boundary>(boundary)
+    );
+}
+
 
 } // namespace FoamRanges
