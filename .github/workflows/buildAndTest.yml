@@ -1,0 +1,24 @@
+name: Compile and test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: Build code base
+    runs-on: "ubuntu-22.04"
+    container:
+      image: niemiti/ofdevcuda:latest
+      options: --user root
+    steps:
+    - name: Checkout foamRanges
+      uses: actions/checkout@v3
+    - name: Build OpenFOAM
+      run: source /opt/OpenFOAM/OpenFOAM-dev/etc/bashrc && ./Allwmake
+      shell: bash
+    - name: Run unittests
+      run: source /opt/OpenFOAM/OpenFOAM-dev/etc/bashrc && Test-Ranges Test-Range
+      shell: bash

@@ -21,50 +21,11 @@ License
     You should have received a copy of the GNU General Public License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
-Class
-    FoamRanges::geometricTransform
-
-Description
-    Functions for creating geometric transform ranges.
-
-SourceFiles
-
-
 \*---------------------------------------------------------------------------*/
 
 #pragma once
 
-#include "geometricTransformRange.H"
-#include "mdTransform.H"
-#include "dimensionedTransform.H"
-#include "applyBinaryOp.H"
+#include <type_traits>
 
-namespace FoamRanges
-{
 
-template<class Rng, class UnaryOp>
-constexpr auto geometricTransform(const Rng& rng, UnaryOp&& f)
-{
-    return makeGeometricTransformRange
-    (
-        rng,
-        std::forward<UnaryOp>(f),
-        f(rng.internalField().dimensions()),
-        f(rng.internalField().name())
-    );
-}
-
-template<class Range1_t, class Range2_t, class BinaryOp>
-constexpr auto geometricTransform(const Range1_t& rng1, const Range2_t& rng2, const BinaryOp& f)
-{
-    return makeGeometricTransformRange
-    (
-        rng1,
-        rng2,
-        detail::ApplyBinaryOp<BinaryOp>(f),
-        f(rng1.internalField().dimensions(), rng2.internalField().dimensions()),
-        f(rng1.internalField().name(), rng2.internalField().name())
-    );
-}
-
-} // namespace FoamRanges
+#define REQUIRES(...) std::enable_if_t<(__VA_ARGS__), int> = 0

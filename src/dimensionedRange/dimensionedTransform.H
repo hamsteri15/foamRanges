@@ -42,24 +42,24 @@ namespace FoamRanges
 {
 
 template<class Rng, class UnaryOp>
-constexpr auto dimensionedTransform(const Rng& rng, UnaryOp&& f)
+constexpr auto dimensionedTransform(const Rng& rng, const UnaryOp& f)
 {
     return makeDimensionedTransformRange
     (
         rng,
-        std::forward<UnaryOp>(f),
+        f,
         f(rng.dimensions()),
         f(rng.name())
     );
 }
 
 template<class Rng1, class Rng2, class BinaryOp>
-constexpr auto dimensionedTransform(const Rng1& rng1, const Rng2& rng2, BinaryOp&& f)
+constexpr auto dimensionedTransform(const Rng1& rng1, const Rng2& rng2, const BinaryOp& f)
 {
     return makeDimensionedTransformRange
     (
         rng1, rng2,
-        detail::ApplyBinaryOp<BinaryOp>(std::forward<BinaryOp>(f)),
+        detail::ApplyBinaryOp<BinaryOp>(f),
         f(rng1.dimensions(), rng2.dimensions()),
         f(rng1.name(), rng2.name())
     );

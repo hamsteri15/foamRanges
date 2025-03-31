@@ -62,7 +62,7 @@ struct GeometricTransformRange
 };
 
 template<typename Function, class GeomRange_t>
-constexpr auto make_geometric_transform_range
+constexpr auto makeGeometricTransformRange
 (
     const GeomRange_t& rng,
     Function f,
@@ -96,7 +96,7 @@ constexpr auto make_geometric_transform_range
 }
 
 template<typename Function, class Rng1, class Rng2>
-constexpr auto make_geometric_transform_range
+constexpr auto makeGeometricTransformRange
 (
     const Rng1& rng1,
     const Rng2& rng2,

@@ -27,12 +27,36 @@ License
 
 #include <type_traits>
 #include <iterator>
+#include "concepts.H"
+
 
 namespace Foam
 {
 
-class gpuSurfaceMesh;
-class gpuVolMesh;
+class surfaceMesh;
+class volMesh;
+
+
+
+///////////////////////////////////////////////////////////////////////////////////
+
+template<typename T, typename = void>
+struct IsRange
+:
+    public std::false_type
+{};
+
+template<typename T>
+struct IsRange<T, std::void_t<decltype(std::declval<T>().begin()), decltype(std::declval<T>().end())>>
+:
+    public std::true_type
+{};
+
+template<typename T>
+constexpr bool IsRange_v = IsRange<T>::value;
+
+///////////////////////////////////////////////////////////////////////////////////
+
 
 template<typename T, typename = void>
 struct IsIterator
@@ -268,10 +292,10 @@ template<typename T>
 using DeduceMeshType_t = typename DeduceMeshType<T>::type;
 
 template<class T>
-constexpr bool IsSurfaceField_v = std::is_same_v<DeduceMeshType_t<T>, gpuSurfaceMesh>;
+constexpr bool IsSurfaceField_v = std::is_same_v<DeduceMeshType_t<T>, surfaceMesh>;
 
 template<class T>
-constexpr bool IsVolumeField_v = std::is_same_v<DeduceMeshType_t<T>, gpuVolMesh>;
+constexpr bool IsVolumeField_v = std::is_same_v<DeduceMeshType_t<T>, volMesh>;
 
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////
