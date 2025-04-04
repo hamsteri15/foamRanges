@@ -292,10 +292,14 @@ template<typename T>
 using DeduceMeshType_t = typename DeduceMeshType<T>::type;
 
 template<class T>
-constexpr bool IsSurfaceField_v = std::is_same_v<DeduceMeshType_t<T>, surfaceMesh>;
+constexpr bool IsSurfaceField_v 
+    = std::is_same_v<DeduceMeshType_t<T>, surfaceMesh>
+    && IsFoamGeometricField_v<T>;
 
 template<class T>
-constexpr bool IsVolumeField_v = std::is_same_v<DeduceMeshType_t<T>, volMesh>;
+constexpr bool IsVolumeField_v 
+    = std::is_same_v<DeduceMeshType_t<T>, volMesh>
+    && IsFoamGeometricField_v<T>;
 
 ///////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////

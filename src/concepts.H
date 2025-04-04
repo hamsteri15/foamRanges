@@ -27,5 +27,26 @@ License
 
 #include <type_traits>
 
+//These are shorthands for the std::enable_if_t to be used in the header file (REQUIRES) 
+//and in a definition (REQUIRES_DEF) to avoid the the use of std::enable_if_t everywhere.
+//See below for an example.
 
 #define REQUIRES(...) std::enable_if_t<(__VA_ARGS__), int> = 0
+
+//If a separate definition is needed this version must be used in the definition
+#define REQUIRES_DEF(...) std::enable_if_t<(__VA_ARGS__), int>
+
+
+
+//Example usage:
+
+//In a header file:
+//template<class T, REQUIRES(IsFoamField_v<T>)>
+//void myFunction(const T& field);
+
+//In a source file:
+//template<class T, REQUIRES_DEF(IsFoamField_v<T>)>
+//void myFunction(const T& field)
+//{
+//    //do something with field
+//}
