@@ -38,13 +38,13 @@ namespace FoamRanges
 
 #ifdef __NVIDIA_COMPILER__
 
-template<class Rng, class T, class BinaryOp>
+template<class Rng, class BinaryOp>
 constexpr auto min_element(const Rng& rng, const BinaryOp& op)
 {
     return *thrust::min_element(rng.begin(), rng.end(), op);
 }
 
-template<class Rng, class T, class BinaryOp>
+template<class Rng, class BinaryOp>
 constexpr auto max_element(const Rng& rng, const BinaryOp& op)
 {
     return *thrust::max_element(rng.begin(), rng.end(), op);
@@ -53,13 +53,13 @@ constexpr auto max_element(const Rng& rng, const BinaryOp& op)
 
 #else
 
-template<class Rng, class T, class BinaryOp>
+template<class Rng, class BinaryOp>
 constexpr auto min_element(const Rng& rng, const BinaryOp& op)
 {
     return *std::min_element(rng.begin(), rng.end(), op);
 }
 
-template<class Rng, class T, class BinaryOp>
+template<class Rng, class BinaryOp>
 constexpr auto max_element(const Rng& rng, const BinaryOp& op)
 {
     return *std::max_element(rng.begin(), rng.end(), op);
